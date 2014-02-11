@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="torch_selected">resources/torch_selected.png</file>
+        <file alias="torch_deselected">resources/torch_deselected.png</file>
+        <file alias="settings_selected">resources/settings_selected_small.png</file>
+        <file alias="settings_deselected">resources/settings_deselected_small.png</file>
+        <file alias="scan_selected">resources/scan_selected_small.png</file>
+        <file alias="scan_deselected">resources/scan_deselected_small.png</file>
+        <file alias="pro_selected">resources/pro_selected_small.png</file>
+        <file alias="history_selected">resources/history_selected_small.png</file>
+        <file alias="history_deselected">resources/history_deselected_small.png</file>
+    </qresource>
+</RCC>
