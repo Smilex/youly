@@ -17,7 +17,7 @@ QT += multimedia
 SOURCES += main.cpp \
     account.cpp \
     youly.cpp \
-    camerareader.cpp
+    camerasurface.cpp
 
 # Installation path
 # target.path =
@@ -29,7 +29,7 @@ qtcAddDeployment()
 HEADERS += \
     account.h \
     youly.h \
-    camerareader.h
+    camerasurface.h
 
 CONFIG += c++11
 
@@ -38,12 +38,5 @@ RESOURCES += \
 
 OTHER_FILES +=
 
-LIBS += -lzxing
-INCLUDEPATH += $$PWD/../zxing/cpp/core/src
-
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/zbar/lib/ -llibzbar
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/zbar/lib/ -llibzbar
-#else:unix: LIBS += -L$$PWD/zbar/lib/ -llibzbar
-
-#INCLUDEPATH += $$PWD/zbar/include
-#DEPENDPATH += $$PWD/zbar/include
+INCLUDEPATH += zbar/include
+unix:LIBS += -L$$PWD/zbar/lib -lzbar

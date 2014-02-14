@@ -10,21 +10,31 @@ Item {
     MouseArea {
         anchors.fill: parent
         onPressed: {
-            camera.searchAndLock();
+            //camera.searchAndLock();
         }
     }
 
-    Camera {
+    /*Camera {
         id: camera
-        captureMode: Camera.CaptureVideo
-    }
+        //captureMode: Camera.CaptureVideo
+    }*/
 
-    VideoOutput {
+    /*VideoOutput {
         source: camera
         anchors.fill: parent
         focus: visible
         fillMode: VideoOutput.Stretch
+    }*/
+
+    CameraSurface {
+        id: cameraSurface
+        width: parent.width
+        height: parent.height
+
     }
+
+
+    Component.onCompleted: cameraSurface.show();
 
     Connections {
         target: Youly
