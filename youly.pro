@@ -17,7 +17,8 @@ QT += multimedia
 SOURCES += main.cpp \
     account.cpp \
     youly.cpp \
-    camerasurface.cpp
+    barcodesurface.cpp \
+    barcodecamera.cpp
 
 # Installation path
 # target.path =
@@ -29,7 +30,8 @@ qtcAddDeployment()
 HEADERS += \
     account.h \
     youly.h \
-    camerasurface.h
+    barcodesurface.h \
+    barcodecamera.h
 
 CONFIG += c++11
 

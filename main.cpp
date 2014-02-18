@@ -5,7 +5,7 @@
 
 #include "youly.h"
 #include "account.h"
-#include "camerasurface.h"
+#include "barcodecamera.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<Youly>("Youly", 1,0, "Youly", YoulySingletonProvider);
     qmlRegisterSingletonType<Account>("Youly", 1,0, "Account", AccountSingletonProvider);
     //qmlRegisterSingletonType<CameraReader>("Youly", 1,0, "CameraReader", CameraReaderSingletonProvider);
-    qmlRegisterType<CameraSurface>("Youly", 1,0, "CameraSurface");
+    qmlRegisterType<BarcodeCamera>("Youly", 1,0, "BarcodeCamera");
 
     viewer.setMainQmlFile(QStringLiteral("qml/youly/main.qml"));
     viewer.showExpanded();

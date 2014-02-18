@@ -26,15 +26,11 @@ Item {
         fillMode: VideoOutput.Stretch
     }*/
 
-    CameraSurface {
+    BarcodeCamera {
         id: cameraSurface
         width: parent.width
         height: parent.height
-
     }
-
-
-    Component.onCompleted: cameraSurface.show();
 
     Connections {
         target: Youly
