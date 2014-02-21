@@ -7,15 +7,17 @@
 #include <QQuickItem>
 #include <QCamera>
 #include <QPixmap>
-#include <zbar.h>
+#include <zxing/MultiFormatReader.h>
 
-class BarcodeSurface : public QAbstractVideoSurface, public zbar::Decoder::Handler
+class BarcodeSurface : public QAbstractVideoSurface
 {
     Q_OBJECT
 public:
     explicit BarcodeSurface(QObject *parent = 0);
 
+    QPixmap lastFrame() const { return m_lastFrame; }
 signals:
+    void frameReady();
 public slots:
 
 public:
@@ -26,13 +28,11 @@ public:
     virtual bool present(const QVideoFrame &frame);
 
 private:
-    zbar::Decoder m_decoder;
-    zbar::Scanner m_scanner;
-    QVideoFrame m_lastFrame;
+    zxing::MultiFormatReader * m_decoder;
+    QPixmap m_lastFrame;
 
     // Handler interface
 public:
-    virtual void decode_callback(zbar::Decoder &decoder);
 };
 
 #endif // CAMERASURFACE_H

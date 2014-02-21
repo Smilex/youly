@@ -3,6 +3,7 @@
 
 #include <QQuickPaintedItem>
 #include <QCamera>
+#include <QPixmap>
 
 #include "barcodesurface.h"
 
@@ -15,11 +16,12 @@ public:
 signals:
 
 public slots:
-
+    void updateFrame();
 
 private:
     QCamera * m_camera;
     BarcodeSurface m_surface;
+    QPixmap m_lastFrame;
 
     // QQuickPaintedItem interface
 public:

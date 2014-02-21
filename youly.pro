@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     account.cpp \
     youly.cpp \
     barcodesurface.cpp \
-    barcodecamera.cpp
+    barcodecamera.cpp \
+    CameraImageWrapper.cpp
 
 # Installation path
 # target.path =
@@ -31,7 +32,8 @@ HEADERS += \
     account.h \
     youly.h \
     barcodesurface.h \
-    barcodecamera.h
+    barcodecamera.h \
+    CameraImageWrapper.h
 
 CONFIG += c++11
 
@@ -40,5 +42,5 @@ RESOURCES += \
 
 OTHER_FILES +=
 
-INCLUDEPATH += zbar/include
-unix:LIBS += -L$$PWD/zbar/lib -lzbar
+INCLUDEPATH += $$PWD/zxing/core/src
+unix:LIBS += -L$$PWD/zxing-build -lzxing
