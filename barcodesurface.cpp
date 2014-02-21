@@ -3,16 +3,20 @@
 #include "CameraImageWrapper.h"
 #include <QImage>
 
-#include <zxing/common/GlobalHistogramBinarizer.h>
-#include <zxing/Binarizer.h>
-#include <zxing/BinaryBitmap.h>
-
 using namespace zxing;
 
 BarcodeSurface::BarcodeSurface(QObject *parent) :
-    QAbstractVideoSurface(parent)
+    QAbstractVideoSurface(parent), m_barcodeWorker(nullptr)
 {
-    m_decoder = new MultiFormatReader();
+    m_barcodeWorker = new BarcodeWorker(this);
+}
+
+BarcodeSurface::~BarcodeSurface()
+{
+    if (m_barcodeWorker) {
+        m_barcodeWorker->deleteLater();
+    }
+
 }
 
 QList<QVideoFrame::PixelFormat> BarcodeSurface::supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const
@@ -20,8 +24,7 @@ QList<QVideoFrame::PixelFormat> BarcodeSurface::supportedPixelFormats(QAbstractV
     Q_UNUSED(handleType)
 
     QList<QVideoFrame::PixelFormat> list;
-    list.append(QVideoFrame::PixelFormat::Format_BGR24);
-    list.append(QVideoFrame::PixelFormat::Format_RGB24);
+    list.append(QVideoFrame::PixelFormat::Format_RGB32);
     return list;
 }
 
@@ -40,20 +43,16 @@ bool BarcodeSurface::present(const QVideoFrame &frame)
 
     emit frameReady();
 
-    CameraImageWrapper * ciw = new CameraImageWrapper(image);
-    Ref<LuminanceSource> imageRef(ciw);
+    m_barcodeWorker->addImage(new CameraImageWrapper(image));
 
-    GlobalHistogramBinarizer * binz = new GlobalHistogramBinarizer(imageRef);
-
-    Ref<Binarizer> bz (binz);
-    BinaryBitmap * bb = new BinaryBitmap(bz);
-
-    Ref<BinaryBitmap> ref(bb);
-    Ref<Result> res = m_decoder->decode(ref);
-
-    QString resStr(res->getText()->getText().c_str());
-
-    std::cout << res->getText()->getText() << std::endl;
+    if (m_barcodeWorker->isFinished()) {
+        delete m_barcodeWorker;
+        m_barcodeWorker = new BarcodeWorker(this);
+        m_barcodeWorker->addImage(new CameraImageWrapper(image));
+        m_barcodeWorker->start();
+    }
+    else if (!m_barcodeWorker->isRunning())
+        m_barcodeWorker->start();
 
     /*if (!m_surface.isNull()) {
         m_surface.loadFromData(m_lastFrame.bits(), m_lastFrame.mappedBytes());

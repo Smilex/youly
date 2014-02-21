@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     youly.cpp \
     barcodesurface.cpp \
     barcodecamera.cpp \
-    CameraImageWrapper.cpp
+    CameraImageWrapper.cpp \
+    barcodeworker.cpp
 
 # Installation path
 # target.path =
@@ -33,7 +34,8 @@ HEADERS += \
     youly.h \
     barcodesurface.h \
     barcodecamera.h \
-    CameraImageWrapper.h
+    CameraImageWrapper.h \
+    barcodeworker.h
 
 CONFIG += c++11
 
