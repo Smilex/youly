@@ -27,7 +27,7 @@ void BarcodeWorker::run()
             BinaryBitmap * bb = new BinaryBitmap(bz);
 
             Ref<BinaryBitmap> ref(bb);
-            Ref<Result> res = m_decoder->decode(ref);
+            Ref<Result> res = m_decoder->decode(ref, DecodeHints::EAN_13_HINT);
 
             QString resStr(res->getText()->getText().c_str());
 
