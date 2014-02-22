@@ -17,12 +17,18 @@ BarcodeCamera::BarcodeCamera(QQuickPaintedItem *parent) :
     }
 
     connect(&m_surface, SIGNAL(frameReady()), this, SLOT(updateFrame()));
+    connect(&m_surface, SIGNAL(barcodeReady(QString)), this, SLOT(barcodeRead(QString)));
 }
 
 void BarcodeCamera::updateFrame()
 {
     m_lastFrame = m_surface.lastFrame();
     update();
+}
+
+void BarcodeCamera::barcodeRead(QString barcode)
+{
+    emit barcodeReady(barcode);
 }
 
 void BarcodeCamera::start()

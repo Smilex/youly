@@ -16,9 +16,10 @@ public:
     Q_INVOKABLE void start();
     Q_INVOKABLE void stop();
 signals:
-
+    void barcodeReady(QString barcode);
 public slots:
     void updateFrame();
+    void barcodeRead(QString barcode);
 
 private:
     QCamera * m_camera;

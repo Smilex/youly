@@ -40,11 +40,20 @@ Item {
     }
 
     Connections {
+        target: cameraSurface
+        onBarcodeReady: {
+            Youly.testBarcode(barcode, Account.seed);
+        }
+    }
+
+    Connections {
         target: Youly
         onBarcodeValid: {
+            notification = Notifications.barcode();
             if (notification !== null) notification.color = qsTr("green");
         }
         onBarcodeInvalid: {
+            notification = Notifications.barcode();
             if (notification !== null) notification.color = qsTr("red");
         }
     }
