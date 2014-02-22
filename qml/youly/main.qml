@@ -48,6 +48,13 @@ Rectangle {
         y: -main.height
     }
 
+    NavBar {
+        id: navBar
+        width: main.width
+        height: main.height / 4
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
     Component.onCompleted: {
         if (Account.haveCredentials())
             Account.login(Account.username, Account.password);
