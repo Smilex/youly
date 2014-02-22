@@ -20,8 +20,9 @@ public:
     QPixmap lastFrame() const { return m_lastFrame; }
 signals:
     void frameReady();
+    void barcodeReady(QString barcode);
 public slots:
-
+    void barcodeRead(QString barcode);
 public:
 
     // QAbstractVideoSurface interface

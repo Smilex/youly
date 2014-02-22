@@ -19,6 +19,11 @@ BarcodeSurface::~BarcodeSurface()
 
 }
 
+void BarcodeSurface::barcodeRead(QString barcode)
+{
+    emit barcodeReady(barcode);
+}
+
 QList<QVideoFrame::PixelFormat> BarcodeSurface::supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const
 {
     Q_UNUSED(handleType)
@@ -36,8 +41,10 @@ bool BarcodeSurface::present(const QVideoFrame &frame)
     QVideoFrame videoFrame = frame;
     videoFrame.map(QAbstractVideoBuffer::ReadOnly);
 
+    QImage::Format format = QVideoFrame::imageFormatFromPixelFormat(videoFrame.pixelFormat());
+
     QImage image(videoFrame.bits(), videoFrame.width(), videoFrame.height(), videoFrame.bytesPerLine(),
-                 QVideoFrame::imageFormatFromPixelFormat(videoFrame.pixelFormat()));
+                 format);
 
     m_lastFrame = QPixmap::fromImage(image);
 
@@ -45,13 +52,7 @@ bool BarcodeSurface::present(const QVideoFrame &frame)
 
     m_barcodeWorker->addImage(new CameraImageWrapper(image));
 
-    if (m_barcodeWorker->isFinished()) {
-        delete m_barcodeWorker;
-        m_barcodeWorker = new BarcodeWorker(this);
-        m_barcodeWorker->addImage(new CameraImageWrapper(image));
-        m_barcodeWorker->start();
-    }
-    else if (!m_barcodeWorker->isRunning())
+    if (!m_barcodeWorker->isRunning())
         m_barcodeWorker->start();
 
     /*if (!m_surface.isNull()) {

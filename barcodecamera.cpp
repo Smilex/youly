@@ -1,15 +1,19 @@
 #include "barcodecamera.h"
 
 #include <QPainter>
+#include <QMediaObject>
+#include <QUrl>
+
+#include <iostream>
 
 BarcodeCamera::BarcodeCamera(QQuickPaintedItem *parent) :
     QQuickPaintedItem(parent), m_camera(nullptr), m_surface(this)
 {
     m_camera = new QCamera(this);
     if (m_camera) {
-        m_camera->start();
+        //m_camera->start();
 
-        m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( &m_surface ) );
+        //m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( &m_surface ) );
     }
 
     connect(&m_surface, SIGNAL(frameReady()), this, SLOT(updateFrame()));
@@ -19,6 +23,17 @@ void BarcodeCamera::updateFrame()
 {
     m_lastFrame = m_surface.lastFrame();
     update();
+}
+
+void BarcodeCamera::start()
+{
+    m_camera->start();
+    m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( &m_surface ) );
+}
+
+void BarcodeCamera::stop()
+{
+    m_camera->stop();
 }
 
 

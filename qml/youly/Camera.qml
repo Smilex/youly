@@ -30,6 +30,13 @@ Item {
         id: cameraSurface
         width: parent.width
         height: parent.height
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                cameraSurface.start();
+            }
+        }
     }
 
     Connections {

@@ -33,7 +33,7 @@ void BarcodeWorker::run()
 
             emit barcodeReady(resStr);
         } catch (const zxing::Exception& e) {
-
+            Q_UNUSED(e)
         }
     }
 }

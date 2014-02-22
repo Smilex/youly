@@ -13,6 +13,8 @@ class BarcodeCamera : public QQuickPaintedItem
 public:
     explicit BarcodeCamera(QQuickPaintedItem *parent = 0);
 
+    Q_INVOKABLE void start();
+    Q_INVOKABLE void stop();
 signals:
 
 public slots:
