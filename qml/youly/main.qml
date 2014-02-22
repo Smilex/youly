@@ -12,11 +12,11 @@ Rectangle {
     VisualItemModel {
         id: pageModel
 
-        HistoryScreen {
+        /*HistoryScreen {
             id: historyScreen
             width: main.width
             height: main.height
-        }
+        }*/
         CameraScreen {
             id: cameraScreen
             width: main.width
@@ -38,7 +38,7 @@ Rectangle {
         highlightRangeMode: ListView.StrictlyEnforceRange
         snapMode: ListView.SnapOneItem
         boundsBehavior: Flickable.DragOverBounds
-        currentIndex: 1
+        currentIndex: 0
     }
 
     LoginScreen {
