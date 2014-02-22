@@ -10,7 +10,7 @@ class Youly : public QObject
 {
     Q_OBJECT
 public:
-    static QString domain() { return "http://ec2-54-228-242-127.eu-west-1.compute.amazonaws.com/future/"; }
+    static QString domain() { return "http://ec2-54-228-242-127.eu-west-1.compute.amazonaws.com/"; }
 
     explicit Youly(QObject *parent = 0);
     ~Youly(void);
