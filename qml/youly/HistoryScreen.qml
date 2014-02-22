@@ -20,45 +20,6 @@ Item {
 
     ListModel {
         id: historyModel
-
-        ListElement {
-            barcode: "454654658216"
-        }
-
-        ListElement {
-            barcode: "454654658216"
-        }
-
-        ListElement {
-            barcode: "454654658216"
-        }
-
-        ListElement {
-            barcode: "454654658216"
-        }
-
-        ListElement {
-            barcode: "454654658216"
-        }
-
-        ListElement {
-            barcode: "454654658216"
-        }
-        ListElement {
-            barcode: "454654658216"
-        }
-        ListElement {
-            barcode: "454654658216"
-        }
-        ListElement {
-            barcode: "454654658216"
-        }
-        ListElement {
-            barcode: "454654658216"
-        }
-        ListElement {
-            barcode: "454654658216"
-        }
     }
 
     ListView {
