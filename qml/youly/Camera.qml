@@ -32,10 +32,12 @@ Item {
         onBarcodeValid: {
             notification = Notifications.barcode();
             if (notification !== null) notification.color = qsTr("green");
+            historyModel.append({barcode: barcode, statusColor: "green"});
         }
         onBarcodeInvalid: {
             notification = Notifications.barcode();
             if (notification !== null) notification.color = qsTr("red");
+            historyModel.append({barcode: barcode, statusColor: "red"});
         }
     }
 

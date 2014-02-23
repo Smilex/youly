@@ -12,11 +12,6 @@ Rectangle {
     VisualItemModel {
         id: pageModel
 
-        /*HistoryScreen {
-            id: historyScreen
-            width: main.width
-            height: main.height
-        }*/
         CameraScreen {
             id: cameraScreen
             width: main.width
@@ -40,6 +35,13 @@ Rectangle {
         boundsBehavior: Flickable.DragOverBounds
         currentIndex: 0
     }
+
+    HistoryScreen {
+        id: historyScreen
+        width: main.width
+        height: main.height
+    }
+
 
     LoginScreen {
         id: loginScreen
