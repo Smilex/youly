@@ -3,21 +3,26 @@
 #include <QPainter>
 #include <QMediaObject>
 #include <QUrl>
+#include <QQuickWindow>
+#include <QSGSimpleRectNode>
 
 #include <iostream>
 
-BarcodeCamera::BarcodeCamera(QQuickPaintedItem *parent) :
-    QQuickPaintedItem(parent), m_camera(nullptr), m_surface(this)
+BarcodeCamera::BarcodeCamera(QQuickItem *parent) :
+    QQuickItem(parent), m_camera(nullptr), m_surface(this), m_texFrame(nullptr), m_texFrameNode(nullptr)
 {
+    m_texFrameNode = new QSGSimpleTextureNode();
     m_camera = new QCamera(this);
     if (m_camera) {
-        //m_camera->start();
+        m_camera->start();
 
-        //m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( &m_surface ) );
+        m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( &m_surface ) );
     }
 
     connect(&m_surface, SIGNAL(frameReady()), this, SLOT(updateFrame()));
     connect(&m_surface, SIGNAL(barcodeReady(QString)), this, SLOT(barcodeRead(QString)));
+
+    setFlag(ItemHasContents, true);
 }
 
 void BarcodeCamera::updateFrame()
@@ -42,22 +47,20 @@ void BarcodeCamera::stop()
     m_camera->stop();
 }
 
-
-void BarcodeCamera::paint(QPainter *painter)
-{
-    if (painter) {
-        if (m_lastFrame.isNull()) {
-            painter->fillRect(this->x(), this->y(), this->width(), this->height(), Qt::lightGray);
-        } else {
-            painter->drawPixmap(this->x(), this->y(), this->width(), this->height(), m_lastFrame);
-        }
-    }
-}
-
 void BarcodeCamera::classBegin()
 {
 }
 
 void BarcodeCamera::componentComplete()
 {
+}
+
+QSGNode *BarcodeCamera::updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *)
+{
+    if (m_texFrame) {
+        delete m_texFrame;
+    }
+    m_texFrame = this->window()->createTextureFromImage(m_lastFrame);
+    m_texFrameNode->setTexture(m_texFrame);
+    return m_texFrameNode;
 }

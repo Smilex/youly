@@ -46,7 +46,7 @@ bool BarcodeSurface::present(const QVideoFrame &frame)
     QImage image(videoFrame.bits(), videoFrame.width(), videoFrame.height(), videoFrame.bytesPerLine(),
                  format);
 
-    m_lastFrame = QPixmap::fromImage(image);
+    m_lastFrame = image;
 
     emit frameReady();
 

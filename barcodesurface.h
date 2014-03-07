@@ -6,7 +6,7 @@
 #include <QVideoFrame>
 #include <QQuickItem>
 #include <QCamera>
-#include <QPixmap>
+#include <QImage>
 
 #include "barcodeworker.h"
 
@@ -17,7 +17,7 @@ public:
     explicit BarcodeSurface(QObject *parent = 0);
     virtual ~BarcodeSurface(void);
 
-    QPixmap lastFrame() const { return m_lastFrame; }
+    QImage lastFrame() const { return m_lastFrame; }
 signals:
     void frameReady();
     void barcodeReady(QString barcode);
@@ -31,7 +31,7 @@ public:
     virtual bool present(const QVideoFrame &frame);
 
 private:
-    QPixmap m_lastFrame;
+    QImage m_lastFrame;
     BarcodeWorker * m_barcodeWorker;
 };
 

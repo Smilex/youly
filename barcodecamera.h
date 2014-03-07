@@ -3,15 +3,17 @@
 
 #include <QQuickPaintedItem>
 #include <QCamera>
-#include <QPixmap>
+#include <QImage>
+#include <QSGTexture>
+#include <QSGSimpleTextureNode>
 
 #include "barcodesurface.h"
 
-class BarcodeCamera : public QQuickPaintedItem
+class BarcodeCamera : public QQuickItem
 {
     Q_OBJECT
 public:
-    explicit BarcodeCamera(QQuickPaintedItem *parent = 0);
+    explicit BarcodeCamera(QQuickItem *parent = 0);
 
     Q_INVOKABLE void start();
     Q_INVOKABLE void stop();
@@ -24,16 +26,17 @@ public slots:
 private:
     QCamera * m_camera;
     BarcodeSurface m_surface;
-    QPixmap m_lastFrame;
+    QImage m_lastFrame;
+    QSGTexture * m_texFrame;
+    QSGSimpleTextureNode * m_texFrameNode;
 
-    // QQuickPaintedItem interface
-public:
-    virtual void paint(QPainter *painter);
-
-    // QQmlParserStatus interface
 public:
     virtual void classBegin();
     virtual void componentComplete();
+
+    // QQuickItem interface
+protected:
+    QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
 };
 
 #endif // BARCODECAMERA_H
