@@ -10,5 +10,6 @@
         <file alias="history_selected">resources/history_selected_small.png</file>
         <file alias="history_deselected">resources/history_deselected_small.png</file>
         <file>resources/navbar_bg.png</file>
+        <file>resources/barcode.jpg</file>
     </qresource>
 </RCC>

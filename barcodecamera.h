@@ -3,6 +3,7 @@
 
 #include <QQuickPaintedItem>
 #include <QCamera>
+#include <QMediaPlayer>
 #include <QImage>
 #include <QSGTexture>
 #include <QSGSimpleTextureNode>
@@ -25,6 +26,7 @@ public slots:
 
 private:
     QCamera * m_camera;
+    QMediaPlayer * m_mediaPlayer;
     BarcodeSurface m_surface;
     QImage m_lastFrame;
     QSGTexture * m_texFrame;
@@ -36,7 +38,7 @@ public:
 
     // QQuickItem interface
 protected:
-    QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
+    QSGNode *updatePaintNode(QSGNode * node, UpdatePaintNodeData *);
 };
 
 #endif // BARCODECAMERA_H
