@@ -20,7 +20,7 @@ Item {
         }
     }
 
-    Camera {
+    /*Camera {
         id: camera
     }
 
@@ -28,7 +28,7 @@ Item {
         source: camera
         anchors.fill: parent
         fillMode: VideoOutput.Stretch
-    }
+    }*/
 
     Connections {
         target: cameraSurface

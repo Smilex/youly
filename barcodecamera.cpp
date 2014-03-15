@@ -61,7 +61,7 @@ void BarcodeCamera::componentComplete()
         m_mediaPlayer->setVideoOutput(m_surface);
         m_mediaPlayer->play();
     }*/
-    m_camera = new QCamera("/dev/video1", this);
+    m_camera = new QCamera(this);
     if (m_camera) {
         m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( m_surface ) );
         m_camera->start();
@@ -69,7 +69,7 @@ void BarcodeCamera::componentComplete()
 
 
     m_texFrameNode->setRect(this->x(), this->y(), this->width(), this->height());
-    //update();
+    update();
 }
 
 QSGNode *BarcodeCamera::updatePaintNode(QSGNode * node, QQuickItem::UpdatePaintNodeData *)
@@ -92,9 +92,9 @@ QSGNode *BarcodeCamera::updatePaintNode(QSGNode * node, QQuickItem::UpdatePaintN
     QSGSimpleTextureNode *n = static_cast<QSGSimpleTextureNode *>(node);
     if (!n) {
         n = new QSGSimpleTextureNode();
-        n->setTexture(m_texFrame);
     }
 
+    n->setTexture(m_texFrame);
     n->setRect(boundingRect());
 
     return n;
