@@ -7,6 +7,8 @@
 #include <QQuickItem>
 #include <QCamera>
 #include <QImage>
+#include <QMutex>
+#include <iostream>
 
 #include "barcodeworker.h"
 
@@ -17,7 +19,10 @@ public:
     explicit BarcodeSurface(QObject *parent = 0);
     virtual ~BarcodeSurface(void);
 
-    QImage lastFrame() const { return m_lastFrame; }
+    QImage lastFrame() const {
+        return m_lastFrame;
+    }
+
 signals:
     void frameReady();
     void barcodeReady(QString barcode);

@@ -6,6 +6,7 @@
 #include "youly.h"
 #include "account.h"
 #include "barcodecamera.h"
+#include "barcodesurface.h"
 #include <iostream>
 
 int main(int argc, char *argv[])

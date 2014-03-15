@@ -27,7 +27,7 @@ public slots:
 private:
     QCamera * m_camera;
     QMediaPlayer * m_mediaPlayer;
-    BarcodeSurface m_surface;
+    BarcodeSurface* m_surface;
     QImage m_lastFrame;
     QSGTexture * m_texFrame;
     QSGSimpleTextureNode * m_texFrameNode;

@@ -7,22 +7,24 @@
 #include <QSGSimpleRectNode>
 
 #include <iostream>
+#include <fstream>
 
 BarcodeCamera::BarcodeCamera(QQuickItem *parent) :
-    QQuickItem(parent), m_camera(nullptr), m_surface(this), m_texFrame(nullptr), m_texFrameNode(nullptr)
+    QQuickItem(parent), m_camera(nullptr), m_texFrame(nullptr), m_texFrameNode(nullptr)
 {
+    m_surface = new BarcodeSurface(this);
     m_texFrameNode = new QSGSimpleTextureNode();
-    m_lastFrame = QImage(":/resources/barcode.jpg");
 
-    connect(&m_surface, SIGNAL(frameReady()), this, SLOT(updateFrame()));
-    connect(&m_surface, SIGNAL(barcodeReady(QString)), this, SLOT(barcodeRead(QString)));
+    connect(m_surface, SIGNAL(frameReady()), this, SLOT(updateFrame()));
+    connect(m_surface, SIGNAL(barcodeReady(QString)), this, SLOT(barcodeRead(QString)));
 
     setFlag(ItemHasContents, true);
 }
 
 void BarcodeCamera::updateFrame()
 {
-    m_lastFrame = m_surface.lastFrame();
+    //m_lastFrame = m_surface->lastFrame();
+    m_texFrame = this->window()->createTextureFromImage(m_surface->lastFrame());
     update();
 }
 
@@ -54,20 +56,20 @@ void BarcodeCamera::componentComplete()
 {
     /*m_mediaPlayer = new QMediaPlayer();
     if (m_mediaPlayer) {
-        m_mediaPlayer->setMedia(QMediaContent(QUrl("udp://@127.0.0.1:7000")));
+        m_mediaPlayer->setMedia(QMediaContent(QUrl("http://mirrorblender.top-ix.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_stereo.ogg")));
         //m_mediaPlayer->pause();
-        m_mediaPlayer->setVideoOutput(&m_surface);
+        m_mediaPlayer->setVideoOutput(m_surface);
+        m_mediaPlayer->play();
     }*/
-    /*m_camera = new QCamera("/dev/video0", this);
+    m_camera = new QCamera("/dev/video1", this);
     if (m_camera) {
+        m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( m_surface ) );
         m_camera->start();
-
-        m_camera->setViewfinder( static_cast<QAbstractVideoSurface*>( &m_surface ) );
-    }*/
+    }
 
 
     m_texFrameNode->setRect(this->x(), this->y(), this->width(), this->height());
-    update();
+    //update();
 }
 
 QSGNode *BarcodeCamera::updatePaintNode(QSGNode * node, QQuickItem::UpdatePaintNodeData *)
@@ -78,8 +80,14 @@ QSGNode *BarcodeCamera::updatePaintNode(QSGNode * node, QQuickItem::UpdatePaintN
         n->setColor(Qt::red);
     }
     n->setRect(boundingRect());*/
+    /*char buffer[1024];
+    std::ifstream infile("/dev/video1");
+    infile.read(buffer, 1024);
+    infile.close();*/
 
-    m_texFrame = this->window()->createTextureFromImage(m_lastFrame);
+    //m_texFrame = this->window()->createTextureFromImage(m_lastFrame);
+
+    if (!m_texFrame) return node;
 
     QSGSimpleTextureNode *n = static_cast<QSGSimpleTextureNode *>(node);
     if (!n) {

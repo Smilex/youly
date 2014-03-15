@@ -20,6 +20,16 @@ Item {
         }
     }
 
+    Camera {
+        id: camera
+    }
+
+    VideoOutput {
+        source: camera
+        anchors.fill: parent
+        fillMode: VideoOutput.Stretch
+    }
+
     Connections {
         target: cameraSurface
         onBarcodeReady: {
