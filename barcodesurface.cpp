@@ -3,12 +3,17 @@
 #include "CameraImageWrapper.h"
 #include <QImage>
 
+#include <zxing/common/GlobalHistogramBinarizer.h>
+#include <zxing/Binarizer.h>
+#include <zxing/BinaryBitmap.h>
+
 using namespace zxing;
 
 BarcodeSurface::BarcodeSurface(QObject *parent) :
     QAbstractVideoSurface(parent), m_barcodeWorker(nullptr)
 {
     m_barcodeWorker = new BarcodeWorker(this);
+    m_decoder = new MultiFormatReader();
 }
 
 BarcodeSurface::~BarcodeSurface()
@@ -51,16 +56,33 @@ bool BarcodeSurface::present(const QVideoFrame &frame)
 
     emit frameReady();
 
-    //m_barcodeWorker->addImage(new CameraImageWrapper(m_lastFrame));
+    try {
+        CameraImageWrapper * ciw = new CameraImageWrapper(image);
 
-    //if (!m_barcodeWorker->isRunning())
-    //    m_barcodeWorker->start();
+        Ref<LuminanceSource> imageRef(ciw);
+
+        GlobalHistogramBinarizer * binz = new GlobalHistogramBinarizer(imageRef);
+
+        Ref<Binarizer> bz (binz);
+        BinaryBitmap * bb = new BinaryBitmap(bz);
+
+        Ref<BinaryBitmap> ref(bb);
+        Ref<Result> res = m_decoder->decode(ref, DecodeHints::EAN_8_HINT | DecodeHints::EAN_13_HINT);
+
+        QString resStr(res->getText()->getText().c_str());
+
+        std::cout<< "Success: " << resStr.toStdString() << std::endl;
+    } catch (const zxing::Exception& e) {
+        Q_UNUSED(e)
+        std::cout<< e.what() << std::endl;
+    }
+
+    //m_barcodeWorker->addImage(new CameraImageWrapper(image));
 
     /*if (!m_surface.isNull()) {
         m_surface.loadFromData(m_lastFrame.bits(), m_lastFrame.mappedBytes());
     }*/
 
-    //m_lastFrame.unmap();
     videoFrame.unmap();
 
     return true;

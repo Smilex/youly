@@ -7,6 +7,7 @@
 #include <QImage>
 #include <QSGTexture>
 #include <QSGSimpleTextureNode>
+#include "CameraImageWrapper.h"
 
 #include "barcodesurface.h"
 

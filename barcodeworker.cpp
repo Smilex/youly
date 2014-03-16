@@ -3,6 +3,7 @@
 #include <zxing/common/GlobalHistogramBinarizer.h>
 #include <zxing/Binarizer.h>
 #include <zxing/BinaryBitmap.h>
+#include <iostream>
 
 using namespace zxing;
 
@@ -14,8 +15,12 @@ BarcodeWorker::BarcodeWorker(QObject *parent) :
 
 void BarcodeWorker::run()
 {
-    while ( !m_queue.isEmpty() ) {
+    while ( true ) {
         try {
+            if (m_queue.length() == 0) {
+                msleep(500);
+                continue;
+            }
             m_imageMutex.lock();
             CameraImageWrapper * ciw = m_queue.dequeue();
             m_imageMutex.unlock();
@@ -29,11 +34,13 @@ void BarcodeWorker::run()
             Ref<BinaryBitmap> ref(bb);
             Ref<Result> res = m_decoder->decode(ref, DecodeHints::EAN_13_HINT);
 
+            ciw->release();
             QString resStr(res->getText()->getText().c_str());
 
             emit barcodeReady(resStr);
         } catch (const zxing::Exception& e) {
             Q_UNUSED(e)
+            std::cout<< e.what() << std::endl;
         }
     }
 }

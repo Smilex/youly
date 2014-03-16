@@ -9,6 +9,7 @@
 #include <QImage>
 #include <QMutex>
 #include <iostream>
+#include <zxing/MultiFormatReader.h>
 
 #include "barcodeworker.h"
 
@@ -38,6 +39,7 @@ public:
 private:
     QImage m_lastFrame;
     BarcodeWorker * m_barcodeWorker;
+    zxing::MultiFormatReader * m_decoder;
 };
 
 #endif // CAMERASURFACE_H
