@@ -46,3 +46,6 @@ OTHER_FILES +=
 
 INCLUDEPATH += $$PWD/zxing/core/src
 unix:LIBS += -L$$PWD/zxing-build -lzxing
+
+INCLUDEPATH += $$PWD/zbar/
+unix:LIBS += -L$$PWD/../zbar-0.10/build/lib -lzbar

@@ -10,10 +10,12 @@
 #include <QMutex>
 #include <iostream>
 #include <zxing/MultiFormatReader.h>
+#include <zbar.h>
 
 #include "barcodeworker.h"
 
-class BarcodeSurface : public QAbstractVideoSurface
+class BarcodeSurface : public QAbstractVideoSurface,
+        public zbar::Image::Handler
 {
     Q_OBJECT
 public:
@@ -40,6 +42,11 @@ private:
     QImage m_lastFrame;
     BarcodeWorker * m_barcodeWorker;
     zxing::MultiFormatReader * m_decoder;
+    zbar::ImageScanner m_scanner;
+
+    // Handler interface
+public:
+    void image_callback(zbar::Image &image);
 };
 
 #endif // CAMERASURFACE_H
