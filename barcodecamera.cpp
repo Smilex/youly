@@ -9,8 +9,6 @@
 #include <iostream>
 #include <fstream>
 
-using namespace zxing;
-
 BarcodeCamera::BarcodeCamera(QQuickItem *parent) :
     QQuickItem(parent), m_camera(nullptr), m_texFrame(nullptr), m_texFrameNode(nullptr)
 {
