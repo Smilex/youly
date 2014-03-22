@@ -34,8 +34,3 @@ HEADERS += \
     barcodecamera.h
 
 CONFIG += c++11
-
-RESOURCES += \
-    Resources.qrc
-
-OTHER_FILES +=
