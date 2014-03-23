@@ -39,6 +39,3 @@ CONFIG += c++11
 
 RESOURCES += \
     resources.qrc
-
-OTHER_FILES += \
-    qml/youly/components/navbar.qml
