@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<Youly>("Youly", 1,0, "Youly", YoulySingletonProvider);
     qmlRegisterSingletonType<Account>("Youly", 1,0, "Account", AccountSingletonProvider);
     //qmlRegisterSingletonType<CameraReader>("Youly", 1,0, "CameraReader", CameraReaderSingletonProvider);
-    qmlRegisterType<BarcodeCamera>("Youly", 1,0, "BarcodeCamera");
+    qmlRegisterType<BarcodeCamera>("Youly.Components", 1,0, "BarcodeCamera");
 
     viewer.setSource(QUrl("qrc:///Main.qml"));
     viewer.showExpanded();
