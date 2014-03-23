@@ -2,8 +2,8 @@ import QtQuick 2.0
 import QtQuick.Window 2.0
 import "components"
 
-Rectangle {
-    id: rectangle1
+Item {
+    id: main
     width: 320 //Screen.width
     height: 568 //Screen.height
 
