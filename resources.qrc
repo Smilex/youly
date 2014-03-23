@@ -1,5 +1,8 @@
 <RCC>
-    <qresource prefix="/qml">
-        <file alias="main">qml/youly/main.qml</file>
+    <qresource prefix="/">
+        <file alias="main.qml">qml/youly/main.qml</file>
+    </qresource>
+    <qresource prefix="/components">
+        <file alias="NavBar.qml">qml/youly/components/navbar.qml</file>
     </qresource>
 </RCC>

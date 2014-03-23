@@ -1,7 +1,9 @@
 # Add more folders to ship with the application, here
 folder_01.source = qml/youly
 folder_01.target = qml
-DEPLOYMENTFOLDERS = folder_01
+folder_02.source = qml/youly/components
+folder_02.target = qml
+DEPLOYMENTFOLDERS = folder_01 folder_02
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -37,3 +39,6 @@ CONFIG += c++11
 
 RESOURCES += \
     resources.qrc
+
+OTHER_FILES += \
+    qml/youly/components/navbar.qml
