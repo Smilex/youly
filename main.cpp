@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     //qmlRegisterSingletonType<CameraReader>("Youly", 1,0, "CameraReader", CameraReaderSingletonProvider);
     qmlRegisterType<BarcodeCamera>("Youly", 1,0, "BarcodeCamera");
 
-    viewer.setMainQmlFile(QStringLiteral("qml/youly/main.qml"));
+    viewer.setSource(QUrl("qrc:///qml/main"));
     viewer.showExpanded();
 
     return app.exec();
