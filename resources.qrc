@@ -1,8 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file alias="Main.qml">qml/youly/Main.qml</file>
+        <file alias="NavBar.qml">qml/youly/NavBar.qml</file>
     </qresource>
     <qresource prefix="/components">
-        <file alias="NavBar.qml">qml/youly/components/NavBar.qml</file>
+        <file alias="PullIn.qml">qml/youly/components/PullIn.qml</file>
+        <file alias="NavView.qml">qml/youly/components/NavView.qml</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="settings">media/icons/settings.png</file>
     </qresource>
 </RCC>
