@@ -1,5 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Window 2.0
+import Youly.Components 1.0
+import QtGraphicalEffects 1.0
+import QtMultimedia 5.0
 import "components"
 
 Item {
@@ -7,14 +10,21 @@ Item {
     width: 320 //Screen.width
     height: 568 //Screen.height
 
-    NavBar {
-        height: 64
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-
+    Camera {
+        id: camera
     }
+
+    VideoOutput {
+        source: camera
+        fillMode: VideoOutput.Stretch
+    }
+
+    NavView {
+        /*onStateChange: {
+            if (newState != "mid")
+                Qt.createQmlObject('import QtQuick 2.0; import QtGraphicalEffects 1.0; FastBlur {anchors.fill:camera;source:camera;radius:100}', camera, "blur");
+        }*/
+    }
+
+
 }
