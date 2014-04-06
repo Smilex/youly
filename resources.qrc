@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file alias="Main.qml">qml/youly/Main.qml</file>
         <file alias="NavBar.qml">qml/youly/NavBar.qml</file>
+        <file alias="LeftView.qml">qml/youly/LeftView.qml</file>
+        <file alias="RightView.qml">qml/youly/RightView.qml</file>
     </qresource>
     <qresource prefix="/components">
         <file alias="PullIn.qml">qml/youly/components/PullIn.qml</file>

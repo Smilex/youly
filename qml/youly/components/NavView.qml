@@ -4,45 +4,33 @@ Item {
     id: navView
     state: "mid"
 
-    function moveLeft() {
-    }
+    property var blur
+    property real maxOpacity: 0.7
+    property real minOpacity: 0.2
 
-    function moveRight() {
-    }
-
-    function fix() {
-    }
-
-    width: left.width + mid.width + right.width
+    width: leftView.width + midView.width + rightView.width
     height: main.height
-    x: -left.width
+    x: -leftView.width
 
-    Rectangle {
-        id: left
-        x: 0
-        y: 0
-        width: 240
-        height: 568
-        color: "#c7c2c2"
-    }
-
-    Rectangle {
-        id: mid
-        x: left.width
-        y: 485
-        width: 320
-        height: 83
-        color: "#c7c2c2"
-        opacity: 1.0
-    }
-
-    Rectangle {
-        id: right
-        x: mid.x + mid.width
-        y: 0
-        width: 240
-        height: 568
-        color: "#c7c2c2"
+    onXChanged: {
+        if (navView.x > -leftView.width)
+        {
+            blur.radius = (1.0 + navView.x / leftView.width) * 100;
+            midView.opacity = (-navView.x / leftView.width) * maxOpacity;
+            if (midView.opacity <= minOpacity)
+                midView.opacity = minOpacity;
+        }
+        else if (navView.x < leftView.width)
+        {
+            blur.radius = (1.0 + navView.x / leftView.width) * -100;
+            midView.opacity = (maxOpacity + (navView.x + leftView.width) / leftView.width);
+            if (midView.opacity <= minOpacity)
+                midView.opacity = minOpacity;
+        }
+        else {
+            blur.radius = 0
+            midView.opacity = maxOpacity;
+        }
     }
 
     MouseArea {
@@ -50,15 +38,15 @@ Item {
         drag.target: parent
         drag.axis: Drag.XAxis
         drag.maximumX: 0
-        drag.minimumX: (mid.width - right.width) - right.x
+        drag.minimumX: (midView.width - rightView.width) - rightView.x
 
         onReleased: {
             navView.state = ""
-            if (navView.x > -mid.width / 3)
+            if (navView.x > -midView.width / 3)
             {
                 navView.state = "left";
             }
-            else if (navView.x < -right.x + mid.width * 2 / 3)
+            else if (navView.x < -rightView.x + midView.width * 2 / 3)
             {
                 navView.state = "right";
             }
@@ -81,33 +69,21 @@ Item {
             name: "left"
             PropertyChanges {
                 target: navView
-                x: -left.x
-            }
-            PropertyChanges {
-                target: mid
-                opacity: 0.2
+                x: -leftView.x
             }
         },
         State {
             name: "mid"
             PropertyChanges {
                 target: navView
-                x: -mid.x
-            }
-            PropertyChanges {
-                target: mid
-                opacity: 1.0
+                x: -midView.x
             }
         },
         State {
             name: "right"
             PropertyChanges {
                 target: navView
-                x: -right.x + (mid.width - right.width)
-            }
-            PropertyChanges {
-                target: mid
-                opacity: 0.2
+                x: -rightView.x + (midView.width - rightView.width)
             }
         }
     ]
@@ -117,10 +93,11 @@ Item {
             PropertyAnimation {
                 target: navView
                 properties: "x"
-                easing.type: Easing.InOutQuad
+                duration: 100
+                easing.type: Easing.Linear
             }
             PropertyAnimation {
-                target: mid
+                target: midView
                 properties: "opacity"
                 easing.type: Easing.InOutQuad
             }

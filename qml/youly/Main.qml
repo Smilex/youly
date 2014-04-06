@@ -15,15 +15,45 @@ Item {
     }
 
     VideoOutput {
+        id: cameraOutput
         source: camera
         fillMode: VideoOutput.Stretch
     }
 
+    FastBlur {
+        id: fastBlur
+        source: cameraOutput
+        anchors.fill: cameraOutput
+        radius: 0
+    }
+
+
     NavView {
-        /*onStateChange: {
-            if (newState != "mid")
-                Qt.createQmlObject('import QtQuick 2.0; import QtGraphicalEffects 1.0; FastBlur {anchors.fill:camera;source:camera;radius:100}', camera, "blur");
-        }*/
+        blur: fastBlur
+        LeftView {
+            id: leftView
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: midView.width - midView.height
+            x: 0
+        }
+
+        NavBar {
+            id: midView
+            anchors.bottom: parent.bottom
+            anchors.left: leftView.right
+            width: main.width
+            height: 96
+        }
+
+        RightView {
+            id: rightView
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.left: midView.right
+            width: midView.width - midView.height
+        }
+
     }
 
 
